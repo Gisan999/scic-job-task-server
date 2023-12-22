@@ -61,6 +61,22 @@ async function run() {
             res.send(result);
         })
 
+        app.patch('/tasks/innerUpdate/:id', async (req, res) => {
+            const id = req.params.id;
+            const update = req.body;
+            console.log(update);
+            const filter = { _id: new ObjectId(id) };
+            const updatedDoc = {
+                $set: {
+                    status: update
+                }
+            };
+           
+            const result = await tasksCollection.updateOne(filter, updatedDoc);
+            res.send(result);
+        })
+
+
         app.delete('/delete/tasks/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
